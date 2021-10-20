@@ -1,7 +1,7 @@
 # Web-Applications-Interface-with-Haskell
 WAI(Web Application Interface) 3.0 Rapid Prototyping and Fast production code 
 
-The guide here works 100% on MacOs X 10.11.6 El Capital. If any trouble is encountered, learn what you dont know.
+The guide here works 100% on MacOs X 10.11.6 El Capitan. If any trouble is encountered, learn what you dont know.
 Setup your Haskell platform using "haskell_stack.txt". Kindly dont forget to install the "universe-base" package
 Verify everything looks good: Run "stack ghci" on the command prompt, load the "Godel.hs" file in GHCi, and verify its source file enumeration in
 *Main> map from [0..29] == take 30 ss
