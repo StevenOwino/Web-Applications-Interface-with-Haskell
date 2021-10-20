@@ -1,0 +1,136 @@
+Reproducible Builds in Haskell(heavy content)
+
+single-package project
+ 
+stack build alex happy
+stack ghc
+echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bashrc
+stack new helloworld new-template
+cd /Users/stevenowino/helloworld/
+stack build
+
+NOTE: GHC will be installed to your global stack root directory, so calling ghc on the command line won't work. See the stack exec, stack ghc, and stack runghc commands below for more information.
+
+Command to show or hide hidden files via Terminal:
+defaults write com.apple.Finder AppleShowAllFiles YES defaults write com.apple.Finder AppleShowAllFiles NO
+Hold on Option (Ctrl +Alt) and click Finder. Select Relaunch from pop-up menu to reopen Finder. 
+
+stack test
+
+find * -type f (Files of Interest: Setup.hs, stack.yaml, package.yaml)
+stack setup
+stack exec -- which ghc
+
+Let's say we decide to modify our helloworld source a bit to use a new library, perhaps the ubiquitous text package. In src/Lib.hs, we can, for example add:…….import qualified Data.Text.IO as T
+
+This means that the package containing the module in question is not available. To tell stack to use text, you need to add it to your package.yaml file — specifically in your dependencies section, like this:……
+
+dependencies:
+- base >= 4.7 && < 5
+- text # added here
+
+stack build :  This output means that the text package was downloaded, configured, built, and locally installed. Once that was done, we moved on to building our local package (helloworld). At no point did we need to ask stack to build dependencies — it does so automatically.
+
+stack ls dependencies
+
+Curated package sets: In the dependencies for helloworld-0.1.0.0:
+    acme-missiles needed, but the stack configuration has no specified version 
+                  (latest matching version is 0.3)
+needed since helloworld is a build target.
+
+Some different approaches to resolving this:
+
+  * Recommended action: try adding the following to your extra-deps
+    in /Users/stevenowino/helloworld/stack.yaml:
+
+- acme-missiles-0.3@sha256:2ba66a092a32593880a87fb00f3213762d7bca65a687d45965778deb8694c5d1,613
+
+stack build
+
+stack --resolver lts-18.12 build : Resolvers and changing your compiler version
+stack --resolver lts-2 build : Changing GHC versions ; This succeeds, automatically installing the necessary GHC along the way. So, we see that different LTS versions use different GHC versions and stack can handle that.
+
+Let's take an open source package and try to build it. We'll be ambitious and use yackage, a local package server using Yesod. To get the code, we'll use the stack unpack command:
+
+stack unpack yackage-0.8.0 : This new directory does not have a stack.yaml file, so we need to make one first. 
+cd /Users/stevenowino/helloworld/yackage-0.8.0/
+
+stack init : 
+Finds all of the .cabal files in your current directory and subdirectories (unless you use --ignore-subdirs) and determines the packages and versions they require
+Finds the best combination of snapshot and package flags that allows everything to compile with minimum external dependencies
+It tries to look for the best matching snapshot from latest LTS, latest nightly, other LTS versions in that order
+Assuming it finds a match, it will write your stack.yaml file, and everything will work.
+
+Sometimes you may want to use a specific resolver for your project instead of stack init picking one for you. You can do that by using :
+stack init --resolver <resolver>.
+
+stack will automatically install the compiler when you run stack build but you can manually specify the compiler by running :
+stack setup <GHC-VERSION>
+
+stack exec -- ghc-pkg list: GHC itself ships with a number of libraries and executables, which forms the global database.
+
+multi-package projects
+stack unpack wai-app-static-3.1.1 yackage-0.8.0
+stack init
+stack build --ghc-options=-o0 wai : It will build all of the dependencies of wai, and then build wai with all optimizations disabled.
+stack build --ghc-options=-o0 wai warp : This builds the additional dependencies for warp, and then builds warp with optimizations disabled.
+stack build --ghc-options=-O0 warp : stack will instead recompile wai with optimizations enabled again, and then rebuild warp (with optimizations disabled) against this newly built wai. The reason: reproducible builds. If we'd never built wai or warp before, trying to build warp would necessitate building all of its dependencies, and it would do so with default GHC options (optimizations enabled). This dependency would include wai.
+
+Explanation of Commands
+
+stack path
+stack exec env
+stack exec ghci
+stack ghci
+stack exec runghc
+stack runghc
+stack path —stack-root
+
+	•	A project can have multiple packages.
+	•	Each project has a stack.yaml.
+	•	Each package has a .cabal file.
+	•	The .cabal file specifies which packages are dependencies.
+	•	The stack.yaml file specifies which packages are available to be used.
+	•	.cabal specifies the components, modules, and build flags provided by a package
+	•	stack.yaml can override the flag settings for individual packages
+	•	stack.yaml specifies which packages to include
+
+Stack as a Tool:
+Curation vs dependency solving as a default: stack defaults to using curation (Stackage snapshots, LTS Haskell, Nightly, etc) as a default instead of defaulting to dependency solving, as cabal-install does.
+Reproducible: stack goes to great lengths to ensure that stack build today does the same thing tomorrow. cabal-install does not: build plans can be affected by the presence of preinstalled packages, and running cabal update can cause a previously successful build to fail. With stack, changing the build plan is always an explicit decision.
+Automatically building dependencies: In stack, stack test does the same job
+Isolated by default: In cabal, the default behavior is a non-isolated build where working on two projects can cause the user package database to become corrupted. The cabal solution to this is sandboxes. stack, however, provides this behavior by default via its databases. In other words: when you use stack, there's no need for sandboxes, everything is (essentially) sandboxed by default.
+
+stack templates : stack provides multiple templates to start a new project 
+stack new my-yesod-project yesodweb/simple: it would be downloaded from Github, user account yesodweb, repo stack-templates, and file yesod-simple.hsfiles
+stack dot: If you'd like to get some insight into the dependency tree of your packages, you can use the stack dot command
+
+eval "$(stack --bash-completion-script stack)”: Love tab-completion of commands?  Shell auto completion
+
+Power Commands
+stack exec ghci SimpleJSON.hs     — compile a Haskell source
+stack install universe-base
+stack update
+stack unpack
+stack sdist
+stack upload
+stack upgrade
+stack ls snapshots
+stack ls snapshots remote
+stack ls dependencies
+stack list [PACKAGE]….
+stack sig : subcommand can help you with GPG signing & verification
+stack sign: will sign an sdist tarball and submit the signature to sig.commercialhaskell.org for storage in the sig-archive git repo. (Signatures will be used later to verify package integrity.)
+
+Debugging
+
+ stack exec --profile -- my-exe +RTS -p: To create a profiling report for an executable
+
+To enable compilation with profiling options by default you can add the following snippet to your stack.yaml or ~/.stack/config.yaml:
+
+build:
+  library-profiling: true
+  executable-profiling: true
+
+Remarks:
+package management with cabal-install is the single worst aspect of using Haskell.
