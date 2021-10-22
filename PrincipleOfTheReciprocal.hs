@@ -10,16 +10,16 @@
 --
 -- A Covariant Derivative acting on the vector field solves the problem of the extra term contrary to a function,
 -- to achieve self-adjointntness (A tensor bundle in the manifold)
--- The DETERMINANT of the a Bilinear form is NOT scalar, for it picks an INVERSE factor which is an inner-product,
--- also called an operator, inserted in the vector field[In the case of a one-form base space in the Yang-Mills Field]
+-- The DETERMINANT of the Bilinear form is NOT scalar, for it picks an INVERSE factor which is an inner-product,
+-- also called an OPERATOR, inserted in the VECTOR FIELD[In the case of a one-form base space in the Yang-Mills Field]
 -- for any choice of Coordinates in a Manifold.
--- For any LOCAL manifold, 
+-- Now, for any LOCAL manifold, 
 -- we can now realize the COMMUTATOR RELATION and SELF-ADJOINTNESS on a curved space, since P is WELL-DEFINED.
 -- Here we have 2 REAL Omegas on the GRADIENT FIELD.
 -- 
 -- UTILITY : 
 --
--- (I)The push-forward of the vector fileld only EXISTS if the map is an ISOMORPHISM 
+-- (I)The push-forward of the vector fileld only EXISTS, if the map is an ISOMORPHISM 
 -- i.e, the TRANSFORMATION does NOT change the MATRICES(witchcraft) 
 
 -- (II) Conserved Quantities: The POTENTIAL on a Rotating Vector Field on a chosen axis does NOT change
@@ -28,7 +28,7 @@
 -- (III) Theorems: Every Left-Invariant vector field on a LIE GROUP is complete 
 -- i.e, the DERIVATIVE of the IDENTITY is the TANGENT VECTOR/BUNDLE, and as such, SATISFIES the Commutator Relation.
 
--- (IV) Differential Topology, where a FUNCTION is a homotopy EQUIVALANCE with respect to the IDENTITY MAP
+-- (IV) Differential Topology, where a FUNCTION is a homotopy EQUIVALANCE with respect to the IDENTITY MAP.
 
 -- (V) FUNCTIONAL PROGRAMMING 
 -- If a PREDICATE/AXIOMS of a SYSTEM of a left-hand operator is TRUE, 
@@ -39,7 +39,7 @@
 -- to get an ordered SET of BOUNDARY points. 
 -- Thus, knowing the signature of the function alone LIMITS the possible valid behaviors it could have and 
 -- makes the JOB of understanding CODE easier.
--- When we know which part of the code has side effects, and then be appropriately on GUARD.
+-- Whence we know which part of the code has side effects, and then be appropriately on GUARD.
 --
 -- CONCLUSION: 
 -- Technically, it is necesary for CONSTRUCTIVE LOGIC to reason about proofs and formulas.
