@@ -1,5 +1,10 @@
 -- file: Determine the Godel Number of a term of a context-free language by enumeration ordering
+-- Proof is an Equality
 -- imports/extensions, a data type representing the grammar, and a pretty-printer
+-- APPROACH:
+-- Code a formula as a list of Natural Numbers, then
+-- Code that list using Cantors' pairing function to index into infinite list of inhabitants
+
 
 {-# LANGUAGE TypeSynonymInstances #-}
 import Control.Applicative
@@ -120,9 +125,9 @@ instance Godel Add where
 -- We can now "efficiently" translate back and forth between parse trees 
 -- and their Godel numbering for this grammar. 
 -- Moreover, this translation matches the above enumeration, as you can verify:
--- *Main> map from [0..29] == take 30 ss
---
--- Properties of this particular grammar: 
+-- *Main> map from [0..29] == take 30 ss ; PROOF THAT THE FUNCTION WORKS
+
+-- PROPERTIES of this particular grammar: 
 -- nonterminals had infinitely many derivations
 -- except for the instance for (Nat, Nat), 
 -- these Godel numberings look at/produce one bit (or trit) at a time. 
@@ -131,8 +136,8 @@ instance Godel Add where
 -- You have to know the whole number ahead of time to compute the sqrt.
 -- You actually can turn this into a streaming, too, without losing the property of being dense 
 -- (every Nat being associated with a unique (Nat, Nat)),
-        
-    
+   
+-- REFERENCE: Essential Incompletenes of Arithmetic Verified by Coq -- Russel O'Connor    
 
 
 
