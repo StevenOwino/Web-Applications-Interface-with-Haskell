@@ -2,10 +2,11 @@
 -- Greatly tightened Analysis, and commentary of a weak formal system 
 -- Proof is an Equality
 -- Imports/extensions, a data type representing the grammar, and a pretty-printer
--- APPROACH: Implementing c = 2 Aleph ^ Null (COUNTABLE SETS) : Cardinality of the REALS 
+-- APPROACH: Implementing c = 2 Aleph ^ Null (COUNTABLE SETS/COUNTABLE INFINITY/DENUMERABILITY) : Cardinality of the REALS 
 -- Function defined machine-theoretically, to a low-level formal system
 -- Code a formula as a list of Natural Numbers, then
 -- Code that list using Cantors' pairing function to index into infinite list of inhabitants (Countable sets)
+-- Definition: Any set that can be put into one-to-one correspondence with the Natural Numbers is Denumerable.
 
 
 
