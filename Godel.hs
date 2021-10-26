@@ -1,9 +1,12 @@
--- file: Determine the Godel Number of a term of a context-free language by enumeration ordering
+-- file: Determine the Godel Number of a term of a context-free language by enumeration ordering (Sequence of objects in a formal system)
+-- Greatly tightened Analysis, and commentary of a weak formal system 
 -- Proof is an Equality
--- imports/extensions, a data type representing the grammar, and a pretty-printer
--- APPROACH:
+-- Imports/extensions, a data type representing the grammar, and a pretty-printer
+-- APPROACH: Implementing c = 2 Aleph ^ Null (COUNTABLE SETS) : Cardinality of the REALS 
+-- Function defined machine-theoretically, to a low-level formal system
 -- Code a formula as a list of Natural Numbers, then
 -- Code that list using Cantors' pairing function to index into infinite list of inhabitants
+
 
 
 {-# LANGUAGE TypeSynonymInstances #-}
@@ -38,7 +41,7 @@ instance PP Digit where pp = show . fromEnum
 -- +*+ for the diagonalization (mnemonic: the middle character is a product, so we're taking elements
 -- from both the first and second arguments)
 -- One invariant we'll maintain is that our lists 
--- with the exception of digits -- are always infinite. This will be important later.
+-- with the exception of digits -- are always infinite(Countable Set). This will be important later.
 
 ss = adds
 adds =  (Mul <$> muls      )    +++ (uncurry (:+)  <$> adds +*+ muls)
@@ -48,16 +51,16 @@ numbers = (Digit <$> digits)    ++ interleave [[d ::: n | n <- numbers] | d <- d
 digits  = [D0, D1, D2]
 
 -- Lets see a few terms: In GHCI , 
--- *Main> mapM_ (putStrLn . pp) (take 15 ss)
+-- *Main> mapM_ (putStrLn . pp) (take 15 ss)                -- projects the associated function
 -- Let's assume we have two infinite lists a and b.
 -- First, in a +++ b, all the even indices come from a, and all the odd indices come from b.
 -- So we can look at the last bit of an index to see which list to look in,
 -- and the remaining bits to pick an index in that list.
--- Second, in a +*+ b, we can use the standard bijection between pairs of numbers and 
+-- Second, in a +*+ b, we can use the standard bijection(integer multiplication) between pairs of numbers and 
 -- single numbers to translate between indices in the big list and pairs of indices in the a and b lists
 -- We'll define a class for Godel-able things that can be translated back and forth between numbers
 -- indices into the infinite list of inhabitants.
---  Later we'll check that this translation matches the enumeration we defined above.
+-- Later we'll check that this translation matches the enumeration we defined above.
 
 type Nat = Integer 
 class Godel a where
@@ -76,12 +79,12 @@ instance (Godel a, Godel b) => Godel (a, b) where
         triangle   = base * (base + 1) `quot` 2
         m = p - triangle
         n = base - m
--- The instance for pairs here is the standard Cantor diagonal.
+-- The instance for pairs here is the standard Cantor diagonal.   (Refer to Cantors' Transfinite Arithmetic)
 -- Use the triangle numbers to figure out where you're going/coming from using algebra.
 -- We now build up instances for this class. Numbers are represented in base 3.
 
 
--- This instance is a lie! there aren't infinitely many Digits.
+-- This instance is a lie! there aren't infinitely many Digits (The Reals are NOT countable)
 -- But we'll be careful about how we use it
 
 instance Godel Digit where
@@ -97,7 +100,8 @@ instance Godel Number where
 
 -- For the remaining three types, we will, as suggested above, 
 -- check the tag bit to decide which constructor to emit,
--- and use the remaining bits as indices into a diagonalized list
+-- and use the remaining bits as indices into a diagonalized list i.e, packing each binary string of the least possible length
+-- over each bound n > 0 for m + n (Refer to minimum complexity pairing function paper)
 -- All three instances necessarily look very similar.
 
 instance Godel Term where
@@ -122,12 +126,13 @@ instance Godel Add where
         (q, 1) -> uncurry (:+) (from q)
 
 -- And that's it!
--- We can now "efficiently" translate back and forth between parse trees 
+-- We can now "efficiently" translate back and forth between parse trees(Distribute every set S as a member of the the Natural Numbers)
 -- and their Godel numbering for this grammar. 
 -- Moreover, this translation matches the above enumeration, as you can verify:
--- *Main> map from [0..29] == take 30 ss ; PROOF THAT THE FUNCTION WORKS
+-- *Main> map from [0..29] == take 30 ss ; PROOF THAT THE FUNCTION WORKS 
+-- There is no proof of the Continuum Hypothesis: It cannot be disproved or proved using the Standard Axioms of Set Theory
 
--- PROPERTIES of this particular grammar: 
+-- PROPERTIES of this particular grammar: INVERSE standard of the ordering bits 
 -- nonterminals had infinitely many derivations
 -- except for the instance for (Nat, Nat), 
 -- these Godel numberings look at/produce one bit (or trit) at a time. 
@@ -135,10 +140,13 @@ instance Godel Add where
 -- But the (Nat, Nat) one is pretty nasty:
 -- You have to know the whole number ahead of time to compute the sqrt.
 -- You actually can turn this into a streaming, too, without losing the property of being dense 
--- (every Nat being associated with a unique (Nat, Nat)),
+-- (every Nat being associated with a unique (Nat, Nat)
    
--- REFERENCE: Essential Incompletenes of Arithmetic Verified by Coq -- Russel O'Connor    
-
+-- REFERENCE: Essential Incompletenes of Arithmetic Verified by Coq -- Russel O'Connor       
+              Minimum Complexity Pair Function -- Kenneth W. Reagan
+              Cantor's Infinities - Professor Raymond Flood (https://www.youtube.com/watch?v=SqRY1Bm8EVs)
+              Contributions To The Founding Theory of Transfinite Numbers  Georg Cantor
+              
 
 
 
