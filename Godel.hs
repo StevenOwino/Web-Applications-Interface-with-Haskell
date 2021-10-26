@@ -5,7 +5,7 @@
 -- APPROACH: Implementing c = 2 Aleph ^ Null (COUNTABLE SETS) : Cardinality of the REALS 
 -- Function defined machine-theoretically, to a low-level formal system
 -- Code a formula as a list of Natural Numbers, then
--- Code that list using Cantors' pairing function to index into infinite list of inhabitants
+-- Code that list using Cantors' pairing function to index into infinite list of inhabitants (Countable sets)
 
 
 
