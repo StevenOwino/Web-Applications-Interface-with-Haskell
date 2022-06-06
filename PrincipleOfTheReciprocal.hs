@@ -6,7 +6,7 @@
 -- We thus need the COVARIANT DERIVATIVE to solve,
 -- or implement a Complex Valued Function on the total Associated Space of the Principal Bundle,
 -- and not in Euclidean space(R^d),
--- by eliminitating the extra term by, choosing an Omega(a unit operator) approriately.
+-- by eliminitating the extra term by, choosing an Omega(a unit operator) appropriately.
 --
 -- A Covariant Derivative acting on the vector field solves the problem of the extra term contrary to a function,
 -- to achieve self-adjointntness (A tensor bundle in the manifold)
@@ -19,7 +19,7 @@
 -- 
 -- UTILITY : 
 --
--- (I)The push-forward of the vector fileld only EXISTS, if the map is an ISOMORPHISM 
+-- (I)The push-forward of the vector field only EXISTS, if the map is an ISOMORPHISM 
 -- i.e, the TRANSFORMATION does NOT change the MATRICES(witchcraft) 
 
 -- (II) Conserved Quantities: The POTENTIAL on a Rotating Vector Field on a chosen axis does NOT change
@@ -44,7 +44,7 @@
 -- CONCLUSION: 
 -- Technically, it is necesary for CONSTRUCTIVE LOGIC to reason about proofs and formulas.
 -- In the case above, for the DERIVATIVE of an IDENTITY, there is a need to PRESERVE the condition of an INVERSE, or
--- a CONJAGUTAE EQUIVALANCE RELATION, and that this condition is trivial in a CARTESIAN COORDINATE/PRODUCT.
+-- a CONJUGATE EQUIVALANCE RELATION, and that this condition is trivial in a CARTESIAN COORDINATE/PRODUCT.
 -- Here the LINEAR BASIS is recovered as the KERNEL of an Omega SUBSPACE i.e, DIFFERENTIATED.
 -- H_p(P) = Ker(Omega_p) is defined as 
 -- X being an Element of T_p(P) sent to Omega_p(X_p) = 0 ; The IDENTITY BASIS
